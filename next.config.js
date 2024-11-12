@@ -1,9 +1,9 @@
+/** @type {import('next').NextConfig} */
 const nextConfig = {
   output: 'export',
-  basePath: '/real-estate-crm',
   images: {
-    unoptimized: true
+    unoptimized: true,
   }
-};
+}
 
-module.exports = nextConfig;
+module.exports = nextConfig
