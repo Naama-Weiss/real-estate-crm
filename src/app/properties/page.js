@@ -3,7 +3,7 @@
 import { useState } from 'react';
 import Link from 'next/link';
 import { ArrowRight } from 'lucide-react';
-import AddPropertyForm from '@/components/AddPropertyForm';
+import AddPropertyForm from '../../components/AddPropertyForm';
 
 export default function Properties() {
   const [showAddForm, setShowAddForm] = useState(false);
