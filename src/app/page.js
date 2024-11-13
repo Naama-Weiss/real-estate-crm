@@ -5,89 +5,74 @@ import { useState } from 'react';
 export default function Home() {
   const [selectedTab, setSelectedTab] = useState('all');
 
-  const features = [
-    {
+  const areas = {
+    properties: {
       title: "ניהול נכסים",
       items: ["מעקב אחר נכסים", "ניהול פרויקטים ודירות", "מעקב אחר מצב אכלוס"],
-      id: "properties"
+      color: "bg-blue-50 hover:bg-blue-100"
     },
-    {
+    risks: {
       title: "ניהול סיכונים",
       items: ["זיהוי נכסים בסיכון", "מעקב אחר תנאי שוק", "התראות"],
-      id: "risks"
+      color: "bg-green-50 hover:bg-green-100"
     },
-    {
+    finance: {
       title: "ניהול פיננסי",
       items: ["מעקב הכנסות והוצאות", "ניהול תזרים מזומנים", "דוחות כספיים"],
-      id: "finance"
+      color: "bg-purple-50 hover:bg-purple-100"
     }
-  ];
+  };
 
   return (
-    <main className="min-h-screen bg-gray-50">
-      {/* Header */}
-      <header className="bg-white shadow-sm">
-        <div className="max-w-7xl mx-auto py-4 px-4 sm:px-6 lg:px-8">
-          <h1 className="text-3xl font-bold text-gray-900">מערכת ניהול נדל"ן</h1>
-        </div>
-      </header>
-
-      {/* Main Content */}
-      <div className="max-w-7xl mx-auto py-6 sm:px-6 lg:px-8">
+    <div className="min-h-screen bg-gray-50 p-4">
+      <div className="max-w-7xl mx-auto">
+        <h1 className="text-4xl font-bold mb-8 text-center">מערכת ניהול נדל"ן</h1>
+        
         {/* Tabs */}
-        <div className="mb-8 border-b border-gray-200">
-          <nav className="-mb-px flex space-x-8" aria-label="Tabs">
+        <div className="flex justify-center space-x-4 mb-8 rtl">
+          <button
+            onClick={() => setSelectedTab('all')}
+            className={`px-4 py-2 rounded-lg transition-colors ${
+              selectedTab === 'all' ? 'bg-blue-500 text-white' : 'bg-white hover:bg-gray-100'
+            }`}
+          >
+            כל תחומי הניהול
+          </button>
+          {Object.entries(areas).map(([key, area]) => (
             <button
-              onClick={() => setSelectedTab('all')}
-              className={`${
-                selectedTab === 'all'
-                  ? 'border-blue-500 text-blue-600'
-                  : 'border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700'
-              } whitespace-nowrap py-4 px-1 border-b-2 font-medium text-sm`}
+              key={key}
+              onClick={() => setSelectedTab(key)}
+              className={`px-4 py-2 rounded-lg transition-colors ${
+                selectedTab === key ? 'bg-blue-500 text-white' : 'bg-white hover:bg-gray-100'
+              }`}
             >
-              כל המודולים
+              {area.title}
             </button>
-            {features.map((feature) => (
-              <button
-                key={feature.id}
-                onClick={() => setSelectedTab(feature.id)}
-                className={`${
-                  selectedTab === feature.id
-                    ? 'border-blue-500 text-blue-600'
-                    : 'border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700'
-                } whitespace-nowrap py-4 px-1 border-b-2 font-medium text-sm`}
-              >
-                {feature.title}
-              </button>
-            ))}
-          </nav>
+          ))}
         </div>
 
-        {/* Cards Grid */}
-        <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
-          {features
-            .filter(feature => selectedTab === 'all' || selectedTab === feature.id)
-            .map((feature) => (
+        {/* Cards */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          {Object.entries(areas)
+            .filter(([key]) => selectedTab === 'all' || selectedTab === key)
+            .map(([key, area]) => (
               <div
-                key={feature.id}
-                className="bg-white overflow-hidden shadow rounded-lg divide-y divide-gray-200"
+                key={key}
+                className={`p-6 rounded-lg shadow-lg ${area.color} transition-transform hover:scale-105 cursor-pointer`}
               >
-                <div className="px-4 py-5 sm:p-6">
-                  <h3 className="text-lg font-medium text-gray-900">
-                    {feature.title}
-                  </h3>
-                  <ul className="mt-3 list-disc list-inside space-y-2">
-                    {feature.items.map((item, index) => (
-                      <li key={index} className="text-gray-600">
-                        {item}
-                      </li>
-                    ))}
-                  </ul>
-                </div>
+                <h2 className="text-xl font-bold mb-4">{area.title}</h2>
+                <ul className="space-y-2">
+                  {area.items.map((item, index) => (
+                    <li key={index} className="flex items-center">
+                      <span className="h-1.5 w-1.5 bg-gray-500 rounded-full ml-2"></span>
+                      {item}
+                    </li>
+                  ))}
+                </ul>
               </div>
             ))}
         </div>
       </div>
-    </main>
+    </div>
   );
 }
