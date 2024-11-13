@@ -18,8 +18,33 @@ export default function AddPropertyForm({ onSubmit, onCancel }) {
     description: ''
   });
 
+  const [errors, setErrors] = useState({});
+
+  const validateField = (name, value) => {
+    switch (name) {
+      case 'price':
+        return value && value > 0 ? '' : 'מחיר חייב להיות גדול מ-0';
+      case 'rent':
+        return value && value < 0 ? 'שכר דירה לא יכול להיות שלילי' : '';
+      case 'size':
+        return value && value > 0 ? '' : 'גודל חייב להיות גדול מ-0';
+      case 'rooms':
+        return value && value > 0 ? '' : 'מספר חדרים חייב להיות גדול מ-0';
+      case 'address.street':
+        return value.trim() ? '' : 'כתובת היא שדה חובה';
+      case 'address.city':
+        return value.trim() ? '' : 'עיר היא שדה חובה';
+      case 'propertyType':
+        return value ? '' : 'יש לבחור סוג נכס';
+      default:
+        return '';
+    }
+  };
+
   const handleChange = (e) => {
     const { name, value } = e.target;
+    
+    // עדכון הערך
     if (name.includes('.')) {
       const [parent, child] = name.split('.');
       setFormData(prev => ({
@@ -35,11 +60,47 @@ export default function AddPropertyForm({ onSubmit, onCancel }) {
         [name]: value
       }));
     }
+    
+    // בדיקת ולידציה
+    const error = validateField(name, value);
+    setErrors(prev => ({
+      ...prev,
+      [name]: error
+    }));
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    onSubmit(formData);
+    
+    // בדיקת ולידציה לכל השדות
+    const newErrors = {};
+    Object.keys(formData).forEach(key => {
+      if (typeof formData[key] === 'object') {
+        Object.keys(formData[key]).forEach(subKey => {
+          const error = validateField(`${key}.${subKey}`, formData[key][subKey]);
+          if (error) newErrors[`${key}.${subKey}`] = error;
+        });
+      } else {
+        const error = validateField(key, formData[key]);
+        if (error) newErrors[key] = error;
+      }
+    });
+
+    if (Object.keys(newErrors).length === 0) {
+      onSubmit(formData);
+    } else {
+      setErrors(newErrors);
+      // הצגת הודעה למשתמש
+      alert('יש לתקן את השגיאות בטופס');
+    }
+  };
+
+  const getInputClassName = (fieldName) => {
+    return `shadow border rounded w-full py-2 px-3 ${
+      errors[fieldName] 
+        ? 'border-red-500 text-red-700' 
+        : 'border-gray-300 text-gray-700'
+    }`;
   };
 
   return (
@@ -55,8 +116,7 @@ export default function AddPropertyForm({ onSubmit, onCancel }) {
           name="propertyType"
           value={formData.propertyType}
           onChange={handleChange}
-          className="shadow border rounded w-full py-2 px-3 text-gray-700"
-          required
+          className={getInputClassName('propertyType')}
         >
           <option value="">בחר סוג נכס</option>
           <option value="apartment">דירה</option>
@@ -64,6 +124,9 @@ export default function AddPropertyForm({ onSubmit, onCancel }) {
           <option value="office">משרד</option>
           <option value="store">חנות</option>
         </select>
+        {errors.propertyType && (
+          <p className="text-red-500 text-xs mt-1">{errors.propertyType}</p>
+        )}
       </div>
 
       {/* כתובת */}
@@ -77,25 +140,31 @@ export default function AddPropertyForm({ onSubmit, onCancel }) {
           placeholder="רחוב ומספר"
           value={formData.address.street}
           onChange={handleChange}
-          className="shadow border rounded w-full py-2 px-3 text-gray-700 mb-2"
-          required
+          className={getInputClassName('address.street')}
         />
+        {errors['address.street'] && (
+          <p className="text-red-500 text-xs mt-1">{errors['address.street']}</p>
+        )}
+        
         <input
           type="text"
           name="address.city"
           placeholder="עיר"
           value={formData.address.city}
           onChange={handleChange}
-          className="shadow border rounded w-full py-2 px-3 text-gray-700 mb-2"
-          required
+          className={`${getInputClassName('address.city')} mt-2`}
         />
+        {errors['address.city'] && (
+          <p className="text-red-500 text-xs mt-1">{errors['address.city']}</p>
+        )}
+        
         <input
           type="text"
           name="address.zipCode"
           placeholder="מיקוד"
           value={formData.address.zipCode}
           onChange={handleChange}
-          className="shadow border rounded w-full py-2 px-3 text-gray-700"
+          className={`${getInputClassName('address.zipCode')} mt-2`}
         />
       </div>
 
@@ -110,9 +179,11 @@ export default function AddPropertyForm({ onSubmit, onCancel }) {
             name="size"
             value={formData.size}
             onChange={handleChange}
-            className="shadow border rounded w-full py-2 px-3 text-gray-700"
-            required
+            className={getInputClassName('size')}
           />
+          {errors.size && (
+            <p className="text-red-500 text-xs mt-1">{errors.size}</p>
+          )}
         </div>
         <div>
           <label className="block text-gray-700 text-sm font-bold mb-2">
@@ -123,9 +194,11 @@ export default function AddPropertyForm({ onSubmit, onCancel }) {
             name="rooms"
             value={formData.rooms}
             onChange={handleChange}
-            className="shadow border rounded w-full py-2 px-3 text-gray-700"
-            required
+            className={getInputClassName('rooms')}
           />
+          {errors.rooms && (
+            <p className="text-red-500 text-xs mt-1">{errors.rooms}</p>
+          )}
         </div>
       </div>
 
@@ -140,9 +213,11 @@ export default function AddPropertyForm({ onSubmit, onCancel }) {
             name="price"
             value={formData.price}
             onChange={handleChange}
-            className="shadow border rounded w-full py-2 px-3 text-gray-700"
-            required
+            className={getInputClassName('price')}
           />
+          {errors.price && (
+            <p className="text-red-500 text-xs mt-1">{errors.price}</p>
+          )}
         </div>
         <div>
           <label className="block text-gray-700 text-sm font-bold mb-2">
@@ -153,8 +228,11 @@ export default function AddPropertyForm({ onSubmit, onCancel }) {
             name="rent"
             value={formData.rent}
             onChange={handleChange}
-            className="shadow border rounded w-full py-2 px-3 text-gray-700"
+            className={getInputClassName('rent')}
           />
+          {errors.rent && (
+            <p className="text-red-500 text-xs mt-1">{errors.rent}</p>
+          )}
         </div>
       </div>
 
@@ -167,8 +245,7 @@ export default function AddPropertyForm({ onSubmit, onCancel }) {
           name="status"
           value={formData.status}
           onChange={handleChange}
-          className="shadow border rounded w-full py-2 px-3 text-gray-700"
-          required
+          className={getInputClassName('status')}
         >
           <option value="available">פנוי</option>
           <option value="rented">מושכר</option>
@@ -185,7 +262,7 @@ export default function AddPropertyForm({ onSubmit, onCancel }) {
           name="description"
           value={formData.description}
           onChange={handleChange}
-          className="shadow border rounded w-full py-2 px-3 text-gray-700 h-32"
+          className={`${getInputClassName('description')} h-32`}
         />
       </div>
 
