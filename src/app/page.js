@@ -1,6 +1,8 @@
 'use client';
 
 import { useState } from 'react';
+import Link from 'next/link';
+import { ArrowLeft } from 'lucide-react';
 
 export default function Home() {
   const [selectedTab, setSelectedTab] = useState('all');
@@ -9,17 +11,20 @@ export default function Home() {
     properties: {
       title: "ניהול נכסים",
       items: ["מעקב אחר נכסים", "ניהול פרויקטים ודירות", "מעקב אחר מצב אכלוס"],
-      color: "bg-blue-50 hover:bg-blue-100"
+      color: "bg-blue-50 hover:bg-blue-100",
+      path: "/properties"
     },
     risks: {
       title: "ניהול סיכונים",
       items: ["זיהוי נכסים בסיכון", "מעקב אחר תנאי שוק", "התראות"],
-      color: "bg-green-50 hover:bg-green-100"
+      color: "bg-green-50 hover:bg-green-100",
+      path: "/risks"
     },
     finance: {
       title: "ניהול פיננסי",
       items: ["מעקב הכנסות והוצאות", "ניהול תזרים מזומנים", "דוחות כספיים"],
-      color: "bg-purple-50 hover:bg-purple-100"
+      color: "bg-purple-50 hover:bg-purple-100",
+      path: "/finance"
     }
   };
 
@@ -56,20 +61,27 @@ export default function Home() {
           {Object.entries(areas)
             .filter(([key]) => selectedTab === 'all' || selectedTab === key)
             .map(([key, area]) => (
-              <div
+              <Link
+                href={area.path}
                 key={key}
-                className={`p-6 rounded-lg shadow-lg ${area.color} transition-transform hover:scale-105 cursor-pointer`}
               >
-                <h2 className="text-xl font-bold mb-4">{area.title}</h2>
-                <ul className="space-y-2">
-                  {area.items.map((item, index) => (
-                    <li key={index} className="flex items-center">
-                      <span className="h-1.5 w-1.5 bg-gray-500 rounded-full ml-2"></span>
-                      {item}
-                    </li>
-                  ))}
-                </ul>
-              </div>
+                <div
+                  className={`p-6 rounded-lg shadow-lg ${area.color} transition-transform hover:scale-105 cursor-pointer relative`}
+                >
+                  <h2 className="text-xl font-bold mb-4 flex items-center justify-between">
+                    {area.title}
+                    <ArrowLeft className="ml-2" size={20} />
+                  </h2>
+                  <ul className="space-y-2">
+                    {area.items.map((item, index) => (
+                      <li key={index} className="flex items-center">
+                        <span className="h-1.5 w-1.5 bg-gray-500 rounded-full ml-2"></span>
+                        {item}
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              </Link>
             ))}
         </div>
       </div>
