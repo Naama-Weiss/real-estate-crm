@@ -4,10 +4,16 @@
 
 :root {
   --foreground-rgb: 0, 0, 0;
-  --background-rgb: 255, 255, 255;
+  --background-rgb: 243, 244, 246;
 }
 
 body {
   color: rgb(var(--foreground-rgb));
   background: rgb(var(--background-rgb));
+  min-height: 100vh;
+}
+
+.rtl {
+  direction: rtl;
+  text-align: right;
 }
