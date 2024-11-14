@@ -18,31 +18,31 @@ export default function Home() {
 
   const areas = {
     properties: {
-      title: t.areas.properties.title,
+      title: t?.areas?.properties?.title || 'ניהול נכסים',
       items: [
-        t.areas.properties.items.tracking,
-        t.areas.properties.items.projects,
-        t.areas.properties.items.occupancy
+        t?.areas?.properties?.items?.tracking || 'מעקב אחר נכסים',
+        t?.areas?.properties?.items?.projects || 'ניהול פרויקטים ודירות',
+        t?.areas?.properties?.items?.occupancy || 'מעקב אחר מצב אכלוס'
       ],
       color: "bg-blue-50 hover:bg-blue-100",
       path: "/properties"
     },
     risks: {
-      title: t.areas.risks.title,
+      title: t?.areas?.risks?.title || 'ניהול סיכונים',
       items: [
-        t.areas.risks.items.identification,
-        t.areas.risks.items.marketTracking,
-        t.areas.risks.items.alerts
+        t?.areas?.risks?.items?.identification || 'זיהוי נכסים בסיכון',
+        t?.areas?.risks?.items?.marketTracking || 'מעקב אחר תנאי שוק',
+        t?.areas?.risks?.items?.alerts || 'התראות'
       ],
       color: "bg-green-50 hover:bg-green-100",
       path: "/risks"
     },
     finance: {
-      title: t.areas.finance.title,
+      title: t?.areas?.finance?.title || 'ניהול פיננסי',
       items: [
-        t.areas.finance.items.tracking,
-        t.areas.finance.items.cashFlow,
-        t.areas.finance.items.reports
+        t?.areas?.finance?.items?.tracking || 'מעקב הכנסות והוצאות',
+        t?.areas?.finance?.items?.cashFlow || 'ניהול תזרים מזומנים',
+        t?.areas?.finance?.items?.reports || 'דוחות כספיים'
       ],
       color: "bg-purple-50 hover:bg-purple-100",
       path: "/finance"
@@ -84,7 +84,7 @@ export default function Home() {
               selectedTab === 'all' ? 'bg-blue-500 text-white' : 'bg-white hover:bg-gray-100'
             }`}
           >
-            {t.general.allAreas}
+            {t?.general?.allAreas || 'כל תחומי הניהול'}
           </button>
           {Object.entries(areas).map(([key, area]) => (
             <button
