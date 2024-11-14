@@ -1,26 +1,35 @@
 export default {
-    general: {
-      backHome: 'Back to Home',
-      save: 'Save',
-      cancel: 'Cancel',
+  general: {
+    backHome: 'Back to Home',
+    save: 'Save',
+    cancel: 'Cancel',
+    allAreas: 'All Management Areas',
+    systemName: 'Real Estate Management System'
+  },
+  areas: {
+    properties: {
+      title: 'Property Management',
+      items: {
+        tracking: 'Property Tracking',
+        projects: 'Project & Apartment Management',
+        occupancy: 'Occupancy Tracking'
+      }
     },
-    propertyForm: {
-      title: 'Add New Property',
-      propertyType: {
-        label: 'Property Type',
-        placeholder: 'Select Property Type',
-        options: {
-          apartment: 'Apartment',
-          house: 'House',
-          office: 'Office',
-          store: 'Store'
-        }
-      },
-      address: {
-        label: 'Address',
-        street: 'Street & Number',
-        city: 'City',
-        zipCode: 'Zip Code'
-      },
+    risks: {
+      title: 'Risk Management',
+      items: {
+        identification: 'Risk Property Identification',
+        marketTracking: 'Market Conditions Tracking',
+        alerts: 'Alerts'
+      }
+    },
+    finance: {
+      title: 'Financial Management',
+      items: {
+        tracking: 'Income & Expense Tracking',
+        cashFlow: 'Cash Flow Management',
+        reports: 'Financial Reports'
+      }
     }
   }
+}
