@@ -13,6 +13,11 @@ export default {
         tracking: 'מעקב אחר נכסים',
         projects: 'ניהול פרויקטים ודירות',
         occupancy: 'מעקב אחר מצב אכלוס'
+      },
+      buttons: {
+        addNew: 'הוסף נכס חדש',
+        createProject: 'צור פרויקט חדש',
+        viewReport: 'צפה בדוח אכלוס'
       }
     },
     risks: {
@@ -21,6 +26,11 @@ export default {
         identification: 'זיהוי נכסים בסיכון',
         marketTracking: 'מעקב אחר תנאי שוק',
         alerts: 'התראות'
+      },
+      buttons: {
+        review: 'סקירת סיכונים',
+        viewMarket: 'צפה בנתוני שוק',
+        setAlerts: 'הגדר התראות'
       }
     },
     finance: {
@@ -29,6 +39,11 @@ export default {
         tracking: 'מעקב הכנסות והוצאות',
         cashFlow: 'ניהול תזרים מזומנים',
         reports: 'דוחות כספיים'
+      },
+      buttons: {
+        addTransaction: 'הוסף תנועה',
+        viewCashFlow: 'צפה בתזרים',
+        generateReport: 'הפק דוח'
       }
     }
   }
