@@ -5,7 +5,7 @@ import { ArrowRight } from 'lucide-react';
 import { useLanguage } from '../context/LanguageContext';
 import Header from '../components/Header';
 
-export default function Properties() {
+export default function Customers() {
   const { t, dir } = useLanguage();
 
   return (
@@ -23,27 +23,27 @@ export default function Properties() {
           </Link>
         </div>
         
-        <h1 className="text-4xl font-bold mb-8" dir={dir}>{t.areas.properties.title}</h1>
+        <h1 className="text-4xl font-bold mb-8" dir={dir}>{t.areas.customers.title}</h1>
         
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6" dir={dir}>
           <div className="bg-white p-6 rounded-lg shadow-lg">
-            <h2 className="text-xl font-bold mb-4">{t.areas.properties.items.tracking}</h2>
-            <button className="bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600">
-              {t.areas.properties.buttons.addNew}
+            <h2 className="text-xl font-bold mb-4">{t.areas.customers.items.management}</h2>
+            <button className="bg-red-500 text-white px-4 py-2 rounded-lg hover:bg-red-600">
+              {t.areas.customers.buttons.addCustomer}
             </button>
           </div>
           
           <div className="bg-white p-6 rounded-lg shadow-lg">
-            <h2 className="text-xl font-bold mb-4">{t.areas.properties.items.projects}</h2>
-            <button className="bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600">
-              {t.areas.properties.buttons.createProject}
+            <h2 className="text-xl font-bold mb-4">{t.areas.customers.items.contracts}</h2>
+            <button className="bg-red-500 text-white px-4 py-2 rounded-lg hover:bg-red-600">
+              {t.areas.customers.buttons.viewContracts}
             </button>
           </div>
           
           <div className="bg-white p-6 rounded-lg shadow-lg">
-            <h2 className="text-xl font-bold mb-4">{t.areas.properties.items.occupancy}</h2>
-            <button className="bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600">
-              {t.areas.properties.buttons.viewReport}
+            <h2 className="text-xl font-bold mb-4">{t.areas.customers.items.communications}</h2>
+            <button className="bg-red-500 text-white px-4 py-2 rounded-lg hover:bg-red-600">
+              {t.areas.customers.buttons.manageComm}
             </button>
           </div>
         </div>
