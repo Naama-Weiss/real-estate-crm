@@ -20,7 +20,7 @@ export default function Finance() {
           </Link>
         </div>
         
-        <h1 className="text-4xl font-bold mb-8">{t.areas.finance.title}</h1>
+        <h1 className="text-4xl font-bold mb-8" dir={dir}>{t.areas.finance.title}</h1>
         
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6" dir={dir}>
           <div className="bg-white p-6 rounded-lg shadow-lg">
